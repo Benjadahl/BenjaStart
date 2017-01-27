@@ -46,6 +46,8 @@
 
 	"use strict";
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -54,42 +56,87 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
+	var _WidgetCard = __webpack_require__(183);
+
+	var _WidgetCard2 = _interopRequireDefault(_WidgetCard);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var WidgetCard = _react2.default.createClass({
-	  displayName: "WidgetCard",
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-	  render: function render() {
-	    return _react2.default.createElement(
-	      "div",
-	      { className: "WidgetCard", style: { backgroundColor: this.props.backgroundColor, width: this.props.width.toString() + "px", height: this.props.height.toString() + "px" } },
-	      this.props.children
-	    );
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var WidgetContainer = function (_React$Component) {
+	  _inherits(WidgetContainer, _React$Component);
+
+	  function WidgetContainer(props) {
+	    _classCallCheck(this, WidgetContainer);
+
+	    var _this = _possibleConstructorReturn(this, (WidgetContainer.__proto__ || Object.getPrototypeOf(WidgetContainer)).call(this, props));
+
+	    _this.state = { widgetsJSX: [] };
+	    return _this;
 	  }
-	});
 
-	WidgetCard.propTypes = {
-	  backgroundColor: _react2.default.PropTypes.string
-	};
+	  _createClass(WidgetContainer, [{
+	    key: "handleClick",
+	    value: function handleClick() {
+	      this.addWidget("red", 50, 10);
+	    }
+	  }, {
+	    key: "addWidget",
+	    value: function addWidget(backgroundColor, x, y) {
+	      var _this2 = this;
 
-	WidgetCard.defaultProps = {
-	  backgroundColor: "#e74c3c",
-	  width: "100",
-	  height: "100"
-	};
+	      var widgetsJSX = this.state.widgetsJSX;
+	      console.log(widgetsJSX);
+	      widgetsJSX.push(_react2.default.createElement(
+	        _WidgetCard2.default,
+	        {
+	          style: {
+	            backgroundColor: backgroundColor,
+	            marginLeft: x,
+	            marginTop: y,
+	            height: 100,
+	            width: 100
+	          },
+	          key: widgetsJSX.length,
+	          onClick: function onClick() {
+	            return _this2.handleClick();
+	          } },
+	        "test1"
+	      ));
+
+	      this.setState({ widgetsJSX: widgetsJSX });
+	    }
+	  }, {
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      this.addWidget("blue", 250, 250);
+	      this.addWidget("green", 350, 350);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        this.state.widgetsJSX
+	      );
+	    }
+	  }]);
+
+	  return WidgetContainer;
+	}(_react2.default.Component);
+
+	;
 
 	_reactDom2.default.render(_react2.default.createElement(
 	  "div",
 	  null,
-	  _react2.default.createElement(
-	    WidgetCard,
-	    { width: "100", height: "1000" },
-	    _react2.default.createElement(
-	      "p",
-	      null,
-	      "test"
-	    )
-	  )
+	  _react2.default.createElement(WidgetContainer, null)
 	), document.querySelector("#container"));
 
 /***/ },
@@ -21822,6 +21869,76 @@
 
 	module.exports = ReactDOMInvalidARIAHook;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(32);
+
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var WidgetCard = function (_React$Component) {
+	  _inherits(WidgetCard, _React$Component);
+
+	  function WidgetCard() {
+	    _classCallCheck(this, WidgetCard);
+
+	    return _possibleConstructorReturn(this, (WidgetCard.__proto__ || Object.getPrototypeOf(WidgetCard)).apply(this, arguments));
+	  }
+
+	  _createClass(WidgetCard, [{
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        "div",
+	        {
+	          style: this.props.style,
+	          className: "WidgetCard",
+	          onClick: function onClick() {
+	            _this2.props.onClick();
+	          } },
+	        this.props.children
+	      );
+	    }
+	  }]);
+
+	  return WidgetCard;
+	}(_react2.default.Component);
+
+	;
+
+	WidgetCard.propTypes = {
+	  backgroundColor: _react2.default.PropTypes.string
+	};
+
+	WidgetCard.defaultProps = {
+	  backgroundColor: "#e74c3c",
+	  width: "100",
+	  height: "100",
+	  "x": "0",
+	  "y": "0"
+	};
+
+	module.exports = WidgetCard;
 
 /***/ }
 /******/ ]);
