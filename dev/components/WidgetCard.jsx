@@ -3,14 +3,30 @@ import ReactDOM from "react-dom";
 import Draggable from "react-draggable";
 
 class WidgetCard extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      userLink: this.props.userLink
+    };
+  }
   render() {
+    var style = {
+      textDecoration: "none",
+      color: "white",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      marginRight: "50%",
+      transform: "translate(-50%, -50%)",
+      fontFamily: "arial"
+    };
     return (
       <Draggable>
         <div
           style={this.props.style}
           className="WidgetCard"
-          onClick={() => {this.props.onClick()}} >
-          <a href={ this.props.userLink }>
+          onClick={() => {this.props.onClick(this.state.userLink, this.props.ref)}} >
+          <a style={style} href={ this.state.userLink }>
             { this.props.children }
           </a>
         </div>

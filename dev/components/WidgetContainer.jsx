@@ -7,8 +7,11 @@ class WidgetContainer extends React.Component {
     super(props);
     this.state = { widgetsJSX: [] };
   }
-  handleClick() {
-    this.addWidget("red", 50, 10);
+  cardClick(link){
+    console.log(this.state);
+    console.log(link);
+    console.log(this.refs.txtLink);
+    this.refs.txtLink.value = link;
   }
   addWidget(backgroundColor, userLink, x, y) {
     let widgetsJSX = this.state.widgetsJSX;
@@ -23,7 +26,7 @@ class WidgetContainer extends React.Component {
           width: 100
         }}
         key={widgetsJSX.length}
-        onClick={() => this.handleClick()}
+        onClick={this.cardClick.bind(this)}
         userLink={userLink}
         >
         test1
@@ -40,6 +43,9 @@ class WidgetContainer extends React.Component {
     return (
       <div>
         <button onClick={ () => this.addWidget(prompt("color"), "http://google.com", 500, 10) }>Add new widget</button>
+        &nbsp;
+        <input type="text" ref="txtLink" value={"test"}/>
+        <hr />
         {this.state.widgetsJSX}
       </div>
     );

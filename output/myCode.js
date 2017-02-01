@@ -21838,15 +21838,16 @@
 	  }
 
 	  _createClass(WidgetContainer, [{
-	    key: "handleClick",
-	    value: function handleClick() {
-	      this.addWidget("red", 50, 10);
+	    key: "cardClick",
+	    value: function cardClick(link) {
+	      console.log(this.state);
+	      console.log(link);
+	      console.log(this.refs.txtLink);
+	      this.refs.txtLink.value = link;
 	    }
 	  }, {
 	    key: "addWidget",
 	    value: function addWidget(backgroundColor, userLink, x, y) {
-	      var _this2 = this;
-
 	      var widgetsJSX = this.state.widgetsJSX;
 	      console.log(widgetsJSX);
 	      widgetsJSX.push(_react2.default.createElement(
@@ -21860,9 +21861,7 @@
 	            width: 100
 	          },
 	          key: widgetsJSX.length,
-	          onClick: function onClick() {
-	            return _this2.handleClick();
-	          },
+	          onClick: this.cardClick.bind(this),
 	          userLink: userLink
 	        },
 	        "test1"
@@ -21879,7 +21878,7 @@
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this3 = this;
+	      var _this2 = this;
 
 	      return _react2.default.createElement(
 	        "div",
@@ -21887,10 +21886,13 @@
 	        _react2.default.createElement(
 	          "button",
 	          { onClick: function onClick() {
-	              return _this3.addWidget(prompt("color"), "http://google.com", 500, 10);
+	              return _this2.addWidget(prompt("color"), "http://google.com", 500, 10);
 	            } },
 	          "Add new widget"
 	        ),
+	        "\xA0",
+	        _react2.default.createElement("input", { type: "text", ref: "txtLink", value: "test" }),
+	        _react2.default.createElement("hr", null),
 	        this.state.widgetsJSX
 	      );
 	    }
@@ -21934,10 +21936,15 @@
 	var WidgetCard = function (_React$Component) {
 	  _inherits(WidgetCard, _React$Component);
 
-	  function WidgetCard() {
+	  function WidgetCard(props) {
 	    _classCallCheck(this, WidgetCard);
 
-	    return _possibleConstructorReturn(this, (WidgetCard.__proto__ || Object.getPrototypeOf(WidgetCard)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (WidgetCard.__proto__ || Object.getPrototypeOf(WidgetCard)).call(this, props));
+
+	    _this.state = {
+	      userLink: _this.props.userLink
+	    };
+	    return _this;
 	  }
 
 	  _createClass(WidgetCard, [{
@@ -21945,6 +21952,16 @@
 	    value: function render() {
 	      var _this2 = this;
 
+	      var style = {
+	        textDecoration: "none",
+	        color: "white",
+	        position: "absolute",
+	        top: "50%",
+	        left: "50%",
+	        marginRight: "50%",
+	        transform: "translate(-50%, -50%)",
+	        fontFamily: "arial"
+	      };
 	      return _react2.default.createElement(
 	        _reactDraggable2.default,
 	        null,
@@ -21954,11 +21971,11 @@
 	            style: this.props.style,
 	            className: "WidgetCard",
 	            onClick: function onClick() {
-	              _this2.props.onClick();
+	              _this2.props.onClick(_this2.state.userLink, _this2.props.ref);
 	            } },
 	          _react2.default.createElement(
 	            "a",
-	            { href: this.props.userLink },
+	            { style: style, href: this.state.userLink },
 	            this.props.children
 	          )
 	        )
