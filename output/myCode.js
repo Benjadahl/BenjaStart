@@ -21825,6 +21825,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+	var colours = ["#e74c3c", "#f39c12", "#2ecc71", "#9b59b6", "#3498db"];
+
 	var WidgetContainer = function (_React$Component) {
 	  _inherits(WidgetContainer, _React$Component);
 
@@ -21834,46 +21836,59 @@
 	    var _this = _possibleConstructorReturn(this, (WidgetContainer.__proto__ || Object.getPrototypeOf(WidgetContainer)).call(this, props));
 
 	    _this.state = { widgetsJSX: [] };
+	    _this.widgetTotalIndex = 0;
 	    return _this;
 	  }
 
 	  _createClass(WidgetContainer, [{
 	    key: "cardClick",
-	    value: function cardClick(link) {
+	    value: function cardClick(link, index) {
 	      console.log(this.state);
-	      console.log(link);
-	      console.log(this.refs.txtLink);
-	      this.refs.txtLink.value = link;
+	      //this.refs.txtLink.value = link;
+	      this.setState({
+	        lastClicked: index
+	      });
+	    }
+	  }, {
+	    key: "removeWidget",
+	    value: function removeWidget() {
+	      console.log(this.state.lastClicked);
+	      var widgetsJSX = this.state.widgetsJSX;
+	      delete widgetsJSX[this.state.lastClicked];
+	      this.setState({
+	        widgetsJSX: widgetsJSX
+	      });
 	    }
 	  }, {
 	    key: "addWidget",
-	    value: function addWidget(backgroundColor, userLink, x, y) {
+	    value: function addWidget(userLink, x, y) {
+	      var colourIndex = this.widgetTotalIndex;
+	      if (this.widgetTotalIndex >= colours.length) {
+	        colourIndex = this.widgetTotalIndex % colours.length;
+	      }
 	      var widgetsJSX = this.state.widgetsJSX;
 	      console.log(widgetsJSX);
-	      widgetsJSX.push(_react2.default.createElement(
-	        _WidgetCard2.default,
-	        {
-	          style: {
-	            backgroundColor: backgroundColor,
-	            marginLeft: x,
-	            marginTop: y,
-	            height: 100,
-	            width: 100
-	          },
-	          key: widgetsJSX.length,
-	          onClick: this.cardClick.bind(this),
-	          userLink: userLink
+	      widgetsJSX[this.widgetTotalIndex] = _react2.default.createElement(_WidgetCard2.default, {
+	        style: {
+	          backgroundColor: colours[colourIndex],
+	          marginLeft: x,
+	          marginTop: y,
+	          height: 100,
+	          width: 150
 	        },
-	        "test1"
-	      ));
-
+	        key: this.widgetTotalIndex,
+	        index: this.widgetTotalIndex,
+	        onClick: this.cardClick.bind(this),
+	        userLink: userLink
+	      });
+	      this.widgetTotalIndex++;
 	      this.setState({ widgetsJSX: widgetsJSX });
 	    }
 	  }, {
 	    key: "componentWillMount",
 	    value: function componentWillMount() {
-	      this.addWidget("blue", "http://google.com", 250, 250);
-	      this.addWidget("green", "http://reddit.com", 350, 350);
+	      this.addWidget("http://google.com", 250, 250);
+	      this.addWidget("http://reddit.com", 350, 350);
 	    }
 	  }, {
 	    key: "render",
@@ -21886,12 +21901,16 @@
 	        _react2.default.createElement(
 	          "button",
 	          { onClick: function onClick() {
-	              return _this2.addWidget(prompt("color"), "http://google.com", 500, 10);
+	              return _this2.addWidget(prompt("Insert link:", "http://google.com"), 500, 10);
 	            } },
 	          "Add new widget"
 	        ),
 	        "\xA0",
-	        _react2.default.createElement("input", { type: "text", ref: "txtLink", value: "test" }),
+	        _react2.default.createElement(
+	          "button",
+	          { onClick: this.removeWidget.bind(this) },
+	          "Delete last clicked widget"
+	        ),
 	        _react2.default.createElement("hr", null),
 	        this.state.widgetsJSX
 	      );
@@ -21961,6 +21980,7 @@
 	        marginRight: "50%",
 	        transform: "translate(-50%, -50%)",
 	        fontFamily: "arial"
+
 	      };
 	      return _react2.default.createElement(
 	        _reactDraggable2.default,
@@ -21971,12 +21991,12 @@
 	            style: this.props.style,
 	            className: "WidgetCard",
 	            onClick: function onClick() {
-	              _this2.props.onClick(_this2.state.userLink, _this2.props.ref);
+	              _this2.props.onClick(_this2.state.userLink, _this2.props.index);
 	            } },
 	          _react2.default.createElement(
 	            "a",
 	            { style: style, href: this.state.userLink },
-	            this.props.children
+	            this.props.userLink
 	          )
 	        )
 	      );

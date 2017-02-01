@@ -19,15 +19,16 @@ class WidgetCard extends React.Component {
       marginRight: "50%",
       transform: "translate(-50%, -50%)",
       fontFamily: "arial"
+
     };
     return (
       <Draggable>
         <div
           style={this.props.style}
           className="WidgetCard"
-          onClick={() => {this.props.onClick(this.state.userLink, this.props.ref)}} >
+          onClick={() => {this.props.onClick(this.state.userLink, this.props.index)}} >
           <a style={style} href={ this.state.userLink }>
-            { this.props.children }
+            { this.props.userLink }
           </a>
         </div>
       </Draggable>
